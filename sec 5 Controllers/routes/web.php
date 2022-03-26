@@ -30,3 +30,5 @@ Route::get('/admin/posts/example',array('as'=>'admin.home',function(){
     $url = route('admin.home');
     return "This url is ". $url;
 }));
+
+?>
