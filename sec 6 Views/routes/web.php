@@ -185,11 +185,45 @@ use Illuminate\Support\Facades\DB;
 
 //One to Many Relationship
 
-Route::get('/posts',function(){
-  $user = User::find(1);
-  foreach ($user->posts as $post) {
-    # code...
-    echo $post->title.'<br>';
-  }
-})
+// Route::get('/posts',function(){
+//   $user = User::find(1);
+//   foreach ($user->posts as $post) {
+//     # code...
+//     echo $post->title.'<br>';
+//   }
+// });
+
+// use App\Models\Role;
+// Route::get('/posts',function(){
+//   // $role = new Role;
+//   // $role->name = 'subscriber';
+//   // $role->save();
+
+//   // User::create(['name'=>'Peter','email'=>'peter@gmail.com','password'=>'123']);
+
+//   DB::insert('insert into role_user (user_id, role_id) values(?, ?)',[2,2]);
+//   });
+
+  // Many to Many relationship
+
+  // Route::get('/user/{id}/role',function($id){
+  //   $user = User::find($id)->roles()->orderBy('id','desc')->get();
+  //   return $user;
+  //   // foreach ($user->roles as $role) {
+  //   //   # code...
+  //   //   echo $role.'<br>';
+  //   // }
+
+  // })
+
+  // Accessing the intermediate relationship table /pivot
+
+  Route::get('user/pivot',function(){
+    $user = User::find(1);
+
+    foreach ($user->roles as $role) {
+      # code...
+      echo $role->pivot;
+    }
+  })
 ?>

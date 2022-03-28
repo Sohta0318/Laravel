@@ -51,4 +51,12 @@ class User extends Authenticatable
     public function posts(){
         return $this->hasMany('App\Models\Post');
     }
+
+    public function roles(){
+        return $this->belongsToMany('App\Models\Role');
+
+        //to customize table name and columns fellow the format below
+        
+        // return $this->belongsToMany('App\Models\Role','user_roles','user_id','role_id');
+    }
 }
