@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\Post;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,9 +52,9 @@ use App\Http\Controllers\PostsController;
 // |----------------------------------
 
 use Illuminate\Support\Facades\DB;
-Route::get('/insert',function(){
-  DB::insert('insert into posts(title, content) values (?, ?)',['Laravel is awesomewith Edwin', 'Laravel is the best thing that has happened to PHP Period']);
-});
+// Route::get('/insert',function(){
+//   DB::insert('insert into posts(title, content) values (?, ?)',['Laravel is awesomewith Edwin', 'Laravel is the best thing that has happened to PHP Period']);
+// });
 
 // Route::get('/read',function(){
 //   $result = DB::select('select * from posts where id = ?',[1]);
@@ -105,8 +106,9 @@ Route::get('/insert',function(){
 // Route::get('/basicinsert',function(){
 //   $post = new Post; //insert 
 
-//   $post->title = 'New ELOQUENT title insert';
-//   $post->content = 'Wow Eloquent is really awesome , look at this content!';
+//   $post->title = 'New ELOQUENT title insert 2';
+//   $post->user_id=1;
+//   $post->content = 'Wow Eloquent is really awesome , look at this content! new one';
 //   $post->save();
 // });
 // Route::get('/basicupdate',function(){
@@ -159,8 +161,35 @@ Route::get('/insert',function(){
 //   $post = Post::withTrashed()->where('is_admin',0)->restore();
 // })
 
-Route::get('/forcedelete',function(){
-  Post::onlyTrashed()->forceDelete();
-})
+// Route::get('/forcedelete',function(){
+//   Post::onlyTrashed()->forceDelete();
+// })
 
+
+
+// |----------------------------------
+// |Eloquent relationship
+// |----------------------------------
+
+//One to One Relationship
+
+// Route::get('user/{id}/post',function($id){
+//   $user =User::find($id)->post;
+//   return $user;
+// });
+
+// Route::get('post/{id}/user',function($id){
+//   $post =Post::find($id)->user;
+//   return $post;
+// })
+
+//One to Many Relationship
+
+Route::get('/posts',function(){
+  $user = User::find(1);
+  foreach ($user->posts as $post) {
+    # code...
+    echo $post->title.'<br>';
+  }
+})
 ?>

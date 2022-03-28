@@ -28,7 +28,7 @@ return new class extends Migration
     {
         Schema::table('posts', function (Blueprint $table) {
             //
-            $table->dropColumn('delete_at');
+            $table->dropColumn('deleted_at');
         });
     }
 };
