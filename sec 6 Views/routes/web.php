@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\Post;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// |----------------------------------
+// |Normal ROUTES & Parameter & Naming Routes
+// |----------------------------------
 // Route::get('/', function () {
 //     return view('welcome');
 // });
@@ -31,6 +35,9 @@ use Illuminate\Support\Facades\Route;
 //     return "This url is ". $url;
 // }));
 
+// |----------------------------------
+// |Controller ROUTES
+// |----------------------------------
 use App\Http\Controllers\PostsController;
 // Route::get('/post/{id}',[PostsController::class, 'index'])
 // Route::resource('posts',PostsController::class);
@@ -39,10 +46,14 @@ use App\Http\Controllers\PostsController;
 
 // Route::get('post/{id}/{name}/{password}',[PostsController::class,'show_post'])
 
+// |----------------------------------
+// |DATABASE Raw SQL Queryies
+// |----------------------------------
+
 use Illuminate\Support\Facades\DB;
-// Route::get('/insert',function(){
-//   DB::insert('insert into posts(title, content) values (?, ?)',['PHP with Laravel', 'Laravel is the best thing that has happened to PHP']);
-// })
+Route::get('/insert',function(){
+  DB::insert('insert into posts(title, content) values (?, ?)',['Laravel is awesomewith Edwin', 'Laravel is the best thing that has happened to PHP Period']);
+});
 
 // Route::get('/read',function(){
 //   $result = DB::select('select * from posts where id = ?',[1]);
@@ -59,8 +70,97 @@ use Illuminate\Support\Facades\DB;
 //   return $updated;
 // })
 
-Route::get('/delete',function(){
-  $deleted = DB::delete('delete from posts where id = ?',[1]);
-  return $deleted;
+// Route::get('/delete',function(){
+//   $deleted = DB::delete('delete from posts where id = ?',[1]);
+//   return $deleted;
+// })
+
+// |----------------------------------
+// |ELOQUENT ORM
+// |----------------------------------
+
+// Route::get('/read',function(){
+//   $posts = Post::all();
+//   foreach($posts as $post){
+//     return $post->title;
+//   }
+// });
+
+// Route::get('/find',function(){
+//   $post = Post::find(2);
+//   return $post->title;
+// })
+
+// Route::get('/findwhere',function(){
+//   $post = Post::where('id',2)->orderBy('id','desc')->take(1)->get();
+//   return $post;
+// })
+// Route::get('/findmore',function(){
+//   // $post = Post::findOrFail(2);
+//   // return $post;
+//   $post = Post::where('user_count','<','50')->firstOrFail();
+//   return $post;
+// })
+
+// Route::get('/basicinsert',function(){
+//   $post = new Post; //insert 
+
+//   $post->title = 'New ELOQUENT title insert';
+//   $post->content = 'Wow Eloquent is really awesome , look at this content!';
+//   $post->save();
+// });
+// Route::get('/basicupdate',function(){
+//   $post = Post::find(2); //update
+
+//   $post->title = 'Updated title eloquent';
+//   $post->content = 'Updated Wow Eloquent is really awesome , look at this content!';
+//   $post->save();
+// })
+
+// Route::get('/create',function(){
+//   $post = Post::create(['title'=>'the create method', 'content'=>'Wow I am learning a lot PHP with Edwin']);
+// });
+
+// Route::get('/update',function(){
+//   Post::where('id',2)->where('is_admin',0)->update(['title'=>'New PHP title','content'=>'I love my instructor']);
+// });
+
+// Route::get('/delete',function(){
+//   $post = Post::find(2);
+//   $post ->delete();
+// });
+
+// Route::get('/delete2',function(){
+//   Post::destroy([4,5]);
+//   // Post::where('is_admin',0)->delete();
+// });
+
+// |----------------------------------
+// |Soft Deletes
+// |----------------------------------
+
+// Route::get('/softdeletes',function(){
+//   Post::find(6)->delete();
+// });
+
+// Route::get('/readsoftdeletes',function(){
+//   // $post = Post::find(6);
+//   // return $post;
+
+//   // $post = Post::withTrashed()->where('id',6)->get();
+//   // return $post;
+
+//   $post = Post::onlyTrashed()->get();
+//   return $post;
+
+// });
+
+// Route::get('/restore',function(){
+//   $post = Post::withTrashed()->where('is_admin',0)->restore();
+// })
+
+Route::get('/forcedelete',function(){
+  Post::onlyTrashed()->forceDelete();
 })
+
 ?>
