@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Country;
 
 /*
 |--------------------------------------------------------------------------
@@ -218,12 +219,19 @@ use Illuminate\Support\Facades\DB;
 
   // Accessing the intermediate relationship table /pivot
 
-  Route::get('user/pivot',function(){
-    $user = User::find(1);
+  // Route::get('user/pivot',function(){
+  //   $user = User::find(1);
 
-    foreach ($user->roles as $role) {
-      # code...
-      echo $role->pivot;
+  //   foreach ($user->roles as $role) {
+  //     # code...
+  //     echo $role->pivot;
+  //   }
+  // })
+
+  Route::get('/user/country',function(){
+    $country = Country::find(3);
+    foreach($country->posts as $post){
+      return $post;
     }
   })
 ?>
