@@ -33,7 +33,6 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-
     /**
      * The attributes that should be cast.
      *
@@ -42,25 +41,4 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    public function post(){
-        return $this->hasOne('App\Models\Post');
-        // return $this->hasOne('App\Post','the_user_id'); rename it
-    }
-
-    public function posts(){
-        return $this->hasMany('App\Models\Post');
-    }
-
-    public function roles(){
-        return $this->belongsToMany('App\Models\Role');
-
-        //to customize table name and columns fellow the format below
-        
-        // return $this->belongsToMany('App\Models\Role','user_roles','user_id','role_id');
-    }
-
-    public function photos(){
-        return $this->morphMany('App\Models\Photo','imageable');
-    }
 }
