@@ -31,4 +31,12 @@ Route::middleware('auth')->group(function(){
   
   Route::post('/admin/posts',[PostController::class,'store'])->name('post.store');
 
+  Route::get('/admin/posts',[PostController::class,'index'])->name('post.index');
+
+  Route::get('/admin/posts/{post}/edit',[PostController::class,'edit'])->name('post.edit');
+
+  Route::delete('/admin/posts/{post}/destroy',[PostController::class,'destroy'])->name('post.destroy');
+
+  Route::patch('/admin/posts/{post}/update',[PostController::class,'update'])->name('post.update');
+
 });
