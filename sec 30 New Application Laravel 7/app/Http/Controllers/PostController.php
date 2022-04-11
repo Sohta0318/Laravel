@@ -9,8 +9,9 @@ use Illuminate\Support\Facades\Session;
 class PostController extends Controller
 {
     public function index(){
-        $posts = Post::all();
-        // $posts = auth()->user()->posts;
+        // $posts = Post::all();
+        $posts = auth()->user()->posts()->paginate(3);
+        
         return view('admin.posts.index',compact('posts'));
     }
 
@@ -20,6 +21,7 @@ class PostController extends Controller
     }
 
     public function create(){
+        $this->authorize('create',Post::class);
         return view('admin.posts.create');
     }
     
@@ -27,6 +29,7 @@ class PostController extends Controller
         // return dd($request->all());
         // return dd(request()->all());
 
+        $this->authorize('create',Post::class);
 
         $inputs = request()->validate([
             'title'=>'required|min:8|max:255',
@@ -48,6 +51,8 @@ class PostController extends Controller
     }
 
     public function destroy(Post $post, Request $request){
+        $this->authorize('delete',$post);
+
         $post->delete();
         Session::flash('message','Post was deleted');
         // $request->session()->flash('message','Post was deleted');
@@ -55,6 +60,8 @@ class PostController extends Controller
     }
 
     public function edit(Post $post){
+        // if(auth()->user()->can('view',$post)){};
+        
         $this->authorize('view',$post);
 
         return view('admin.posts.edit',compact('post'));
